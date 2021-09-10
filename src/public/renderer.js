@@ -1,0 +1,1 @@
+const { ipcRender} = require('electron');

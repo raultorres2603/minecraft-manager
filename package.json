@@ -1,0 +1,27 @@
+{
+  "name": "minecraft-manager",
+  "version": "0.0.1",
+  "description": "An app to install mods, backups and servers",
+  "main": "./src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raultorres2603/minecraft-manager.git"
+  },
+  "keywords": [
+    "minecraft",
+    "manager"
+  ],
+  "author": "Raúl Torres Alarcón",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/raultorres2603/minecraft-manager/issues"
+  },
+  "homepage": "https://github.com/raultorres2603/minecraft-manager#readme",
+  "devDependencies": {
+    "electron": "^14.0.0"
+  }
+}
