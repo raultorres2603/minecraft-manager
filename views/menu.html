@@ -1,15 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../src/downloads/bootstrap-5.1.1-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../src/public/css/main.css">
     <script src="../src/downloads/bootstrap-5.1.1-dist/js/bootstrap.bundle.min.js"></script>
     <script src="../src/downloads/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="../src/public/css/main.css">
+    <link rel="stylesheet" href="../src/downloads/fontawesome-free-5.15.4-web/css/all.min.css">
+    <script src="../src/downloads/fontawesome-free-5.15.4-web/js/all.min.js"></script>
 </head>
+
 <body class="bodyMain">
-    
+    <audio src="../src/public/audio/musica_de_fondo.mp3" autoplay loop>
+
+    </audio>
+    <div class="container">
+        <div class="row">
+            <center>
+                <div class="row mb-2">
+                    <h1 class="titleMainMenu">Minecraft Manager</h1>
+                </div>
+            </center>
+            <div class="botonesMenuContainer">
+                <div class="row mt-2">
+                    <button type="button" class="btn btn-dark btn-lg botonesMenuPrinci">Instalar MODS</button>
+                </div>
+                <div class="row mt-2">
+                    <button type="button" class="btn btn-dark btn-lg botonesMenuPrinci">Crear copias de seguridad</button>
+                </div>
+                <div class="row mt-2">
+                    <button type="button" class="btn btn-dark btn-lg botonesMenuPrinci">Iniciar servidor</button>
+                </div>
+                <div class="row mt-2">
+                    <button type="button" class="btn btn-danger btn-lg botonesMenuPrinci" onclick="cerrarApp()">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../src/public/renderer.js"></script>
 </body>
+
 </html>

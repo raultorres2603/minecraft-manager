@@ -1,3 +1,27 @@
+@font-face {
+    font-family: 'Minecraft';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Minecraft'), url('../../downloads/fonts/MinecraftTen-VGORe.woff') format('woff');
+}
+
 .bodyMain {
     background-image: url("../img/fondo.jpeg")
+}
+
+.titleMainMenu {
+    font-size: 11vh;
+}
+
+.botonesMenuContainer {
+    margin-top: 20vh;
+}
+
+.botonesMenuPrinci {
+    font-size: 5vh;
+}
+
+* {
+    font-family: 'Minecraft';
+    color: black;
 }

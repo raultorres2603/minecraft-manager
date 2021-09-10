@@ -1,6 +1,17 @@
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, BrowserWindow, ipcMain, Menu, WebContents,globalShortcut } = require('electron')
+const path = require('path')
+const fs = require('fs');
+const os = require('os');
+
+require('electron-reload')(__dirname, {
+    electron: path.join(__dirname, '../node_modules', '.bin', 'electron')
+  });
 
 var mainWindow
+
+ipcMain.on('cerrarApp', (event, args) => {
+    if (process.platform !== 'darwin') app.quit()
+})
 
 function createMain() {
     mainWindow = new BrowserWindow({
@@ -8,19 +19,19 @@ function createMain() {
         height: 600,
         show: false,
         darkTheme: true,
+        icon: "./src/public/img/icono.png",
         center: true,
         frame: false,
         resizable: false,
         title: "Minecraft Manager",
         webPreferences: {
             nodeIntegration: true,
-            contextIsolation: false
-            
+            contextIsolation: false,
           },
     })
 
     mainWindow.on('closed', () => {
-        app.quit()
+        if (process.platform !== 'darwin') app.quit()
     })
 
     mainWindow.once('ready-to-show', () => {
@@ -34,6 +45,10 @@ function createMain() {
 
 app.whenReady().then(() => {
     createMain();
+
+    globalShortcut.register('Ctrl+Shift+I', () => {
+        mainWindow.webContents.toggleDevTools();
+      })
   })
 
   app.on('window-all-closed', function () {
