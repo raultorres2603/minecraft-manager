@@ -44,14 +44,24 @@ ipcMain.on('cerrarErrorForgeDesc', (event, args) => {
 ipcMain.on('instalarForge', (event, args) => {
   versiones.forEach((elemento, posVersiones) => {
     if (elemento.version == currentVersion) {
-      https.get(elemento.forge, {encoding: null}, (res) => {
+      https.get(elemento.forge, { encoding: null }, (res) => {
         res.on('error', (err) => {
-           return errorDescargarForge(currentVersion);
+          return errorDescargarForge(currentVersion);
         })
 
         let fichero = fs.createWriteStream(path.join(os.homedir(), "Downloads", `forge-${currentVersion}.jar`));
         res.pipe(fichero)
-        exec(`java -jar ${path.join(os.homedir(), "Downloads", `forge-${currentVersion}.jar`)}`);
+
+        res.on(`end`, () => {
+          exec(`java -jar ${path.join(os.homedir(), "Downloads", `forge-${currentVersion}.jar`)}`, (err, stdout, stderr) => {
+            if (err) {
+              console.log(err)
+            }
+            if (stdout) {
+              forgeErrorWindow.close();
+            }
+          })
+        })
       })
     }
   });
