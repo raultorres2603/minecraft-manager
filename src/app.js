@@ -58,9 +58,9 @@ ipcMain.on('instalarForge', (event, args) => {
               console.log(err)
             }
             if (stdout) {
-              fs.unlink(`${path.join(os.homedir(), "Downloads", `forge-${currentVersion}.jar`)}`, (err) => {
-                if (err) {
-                  console.log(err)
+              fs.unlink(`${path.join(os.homedir(), "Downloads", `forge-${currentVersion}.jar`)}`, (error) => {
+                if (error) {
+                  console.log(error)
                   forgeErrorWindow.close();
                 } else {
                   forgeErrorWindow.close();
