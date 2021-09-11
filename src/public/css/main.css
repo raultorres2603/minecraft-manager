@@ -9,6 +9,10 @@
     background-image: url("../img/fondo.jpeg")
 }
 
+.paragraph {
+    font-size: 8vh;
+}
+
 .bodyError {
     background-color: black;
 }

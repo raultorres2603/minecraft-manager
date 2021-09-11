@@ -3,7 +3,8 @@ const path = require('path')
 const fs = require('fs');
 const os = require('os');
 const url = require('url');
-const { exec, spawn } = require('child_process');
+const https = require('https');
+const { exec, spawn, execFile } = require('child_process');
 
 require('electron-reload')(__dirname, {
   electron: path.join(__dirname, '../node_modules', '.bin', 'electron')
@@ -12,10 +13,16 @@ require('electron-reload')(__dirname, {
 var mainWindow;
 var versiones = require("./public/versiones/versiones.json");
 var versionWindow;
+var forgeErrorWindow;
+var forgeErrorDescWindow;
 var currentVersion;
 
 ipcMain.on('cerrarApp', (event, args) => {
   if (process.platform !== 'darwin') app.quit()
+})
+
+ipcMain.on('cerrarErrorForge', (event, args) => {
+  forgeErrorWindow.close();
 })
 
 ipcMain.on('volverAlMenu', () => {
@@ -30,13 +37,55 @@ ipcMain.on('cerrarError', (event, args) => {
   versionWindow.close()
 })
 
+ipcMain.on('cerrarErrorForgeDesc', (event, args) => {
+  forgeErrorDescWindow.close();
+})
+
+ipcMain.on('instalarForge', (event, args) => {
+  versiones.forEach((elemento, posVersiones) => {
+    if (elemento.version == currentVersion) {
+      https.get(elemento.forge, (res) => {
+        res.on('error', (err) => {
+          errorDescargarForge(currentVersion);
+        })
+
+        res.on('data', (data) => {
+          fs.writeFile(path.join(os.homedir(), "Downloads", `forge-${currentVersion}.jar`), data, (err) => {
+            if (err) {
+              console.log(err);
+            }
+          })
+        })
+      })
+    }
+  });
+})
+
 ipcMain.on('comprobarVersion', (event, args) => {
   let version = args[0];
   fs.readdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "versions", version), (err, files) => {
     if (err) {
       event.sender.send('comprobarVersion_ok', ["error", version])
     } else {
-      console.log(files);
+      versiones.forEach(elemento => {
+        if (elemento.version == version) {
+          let forgeDirectory = elemento.forge.indexOf(`/forge/`);
+          let lastBarra = elemento.forge.lastIndexOf('/');
+          let directorioVersion = elemento.forge.substring(forgeDirectory + 7, lastBarra)
+          let versionString = directorioVersion.substring(0, directorioVersion.indexOf("-"))
+          let numeritos = directorioVersion.substring(directorioVersion.indexOf("-"), directorioVersion.length);
+          let carpetaVersion = `${versionString}-forge${numeritos}`
+
+          fs.readdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "versions", carpetaVersion), (err, files) => {
+            if (err) {
+              currentVersion = version
+              createForgeError(version)
+            } else {
+              currentVersion = version
+            }
+          })
+        }
+      });
     }
   })
 })
@@ -44,6 +93,10 @@ ipcMain.on('comprobarVersion', (event, args) => {
 ipcMain.on('elegirVersion', (event, args) => {
   changeVersionWindow()
 })
+
+function errorDescargarForge(version) {
+
+}
 
 function createErrorVersion() {
   versionWindow = new BrowserWindow({
@@ -62,6 +115,48 @@ function createErrorVersion() {
   })
 
   versionWindow.loadFile(__dirname + "/../views/errorVersion.html")
+}
+
+function createErrorDescForgeWin() {
+  forgeErrorDescWindow = new BrowserWindow({
+    width: 800,
+    height: 200,
+    darkTheme: true,
+    icon: "./src/public/img/icono.png",
+    center: true,
+    frame: false,
+    resizable: false,
+    title: "Error!",
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
+  })
+
+  forgeErrorDescWindow.loadFile(__dirname + "/../views/errorDescForge.html")
+}
+
+function createForgeError(version) {
+  forgeErrorWindow = new BrowserWindow({
+    width: 800,
+    height: 300,
+    darkTheme: true,
+    icon: "./src/public/img/icono.png",
+    center: true,
+    frame: false,
+    resizable: false,
+    title: "Error!",
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
+  })
+
+  forgeErrorWindow.loadFile(__dirname + "/../views/errorForge.html")
+
+  setTimeout(() => {
+    forgeErrorWindow.webContents.send('versionForge', [version])
+  }, 300);
 }
 
 function createMain() {

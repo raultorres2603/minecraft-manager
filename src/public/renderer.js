@@ -13,6 +13,11 @@ ipcRenderer.on('mandarVersiones', (event, args) => {
     });
 })
 
+ipcRenderer.on('versionForge', (event, args) => {
+    let version = args[0];
+    let paragraph = document.getElementById('versionForge').textContent = `Desea instalar forge para la version ${version}?`
+})
+
 ipcRenderer.on('comprobarVersion_ok', (event, args) => {
     let codigo = args[0];
     let version = args[1];
@@ -29,6 +34,18 @@ ipcRenderer.on('comprobarVersion_ok', (event, args) => {
 
 function elegirVersion() {
     ipcRenderer.send('elegirVersion')
+}
+
+function instalarForge() {
+    ipcRenderer.send('instalarForge');
+}
+
+function cerrarErrorForge() {
+    ipcRenderer.send('cerrarErrorForge')
+}
+
+function cerrarErrorForgeDesc() {
+    ipcRenderer.send('cerrarErrorForgeDesc')
 }
 
 function cerrarError() {
