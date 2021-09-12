@@ -7,7 +7,7 @@ function cerrarApp() {
 ipcRenderer.on('mandarVersiones', (event, args) => {
     let versiones = args[0]
     let select = document.getElementById('selectVersiones');
-    select.append(new Option("Elige una version", "Elige una version"))
+    select.append(new Option("Choose a version", "Choose a version"))
     versiones.forEach((version, posVersion) => {
         select.append(new Option(version.version, version.version))
     });
@@ -15,7 +15,7 @@ ipcRenderer.on('mandarVersiones', (event, args) => {
 
 ipcRenderer.on('versionForge', (event, args) => {
     let version = args[0];
-    let paragraph = document.getElementById('versionForge').textContent = `Desea instalar forge para la version ${version}?`
+    let paragraph = document.getElementById('versionForge').textContent = `Do you want to install the ${version} forge?`
 })
 
 ipcRenderer.on('comprobarVersion_ok', (event, args) => {
@@ -53,7 +53,7 @@ function cerrarError() {
 }
 
 function aceptarVersion(version) {
-    if (version != "Elige una version") {
+    if (version != "Choose a version") {
         ipcRenderer.send('comprobarVersion', [version])
     }
 }

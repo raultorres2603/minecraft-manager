@@ -95,6 +95,7 @@ ipcMain.on('comprobarVersion', (event, args) => {
               createForgeError(version)
             } else {
               currentVersion = version
+              
             }
           })
         }
