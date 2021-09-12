@@ -1,4 +1,5 @@
-const { app, BrowserWindow, ipcMain, Menu, globalShortcut, webContents, ipcRenderer, autoUpdater } = require('electron')
+const { app, BrowserWindow, ipcMain, Menu, globalShortcut, webContents, ipcRenderer } = require('electron')
+const autoUpdater = require('electron-updater');
 const path = require('path')
 const fs = require('fs');
 const os = require('os');
@@ -385,7 +386,8 @@ function createMain() {
   })
 
   mainWindow.once('ready-to-show', () => {
-    mainWindow.show()
+    mainWindow.show();
+    autoUpdater.checkForUpdatesAndNotify();
   })
 
   mainWindow.loadFile(__dirname + "/../views/menu.html");
@@ -416,3 +418,10 @@ app.whenReady().then(() => {
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
 })
+
+autoUpdater.on('update-available', () => {
+  mainWindow.webContents.send('update_available');
+});
+autoUpdater.on('update-downloaded', () => {
+  mainWindow.webContents.send('update_downloaded');
+});

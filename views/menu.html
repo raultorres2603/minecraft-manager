@@ -13,14 +13,26 @@
 </head>
 
 <body class="bodyMain">
+
+    <div id="notification" class="hidden">
+        <p id="message"></p>
+        <button id="close-button" onClick="closeNotification()">
+            Close
+        </button>
+        <button id="restart-button" onClick="restartApp()" class="hidden">
+            Restart
+        </button>
+    </div>
+
     <div class="container">
         <div class="row">
-                <div class="row mt-5 text-center">
-                    <img src="../src/public/img/Minecraft-Manager.png" class="tituloImagen">
-                </div>
+            <div class="row mt-5 text-center">
+                <img src="../src/public/img/Minecraft-Manager.png" class="tituloImagen">
+            </div>
             <div class="botonesMenuContainer">
                 <div class="row mt-2">
-                    <button id="instalarModsPrinci" type="button" class="btn btn-dark btn-lg botonesMenuPrinci" onclick="elegirVersion()">Install MODS</button>
+                    <button id="instalarModsPrinci" type="button" class="btn btn-dark btn-lg botonesMenuPrinci"
+                        onclick="elegirVersion()">Install MODS</button>
                 </div>
                 <div class="row mt-2">
                     <button type="button" class="btn btn-dark btn-lg botonesMenuPrinci">Create world backups</button>
@@ -29,7 +41,8 @@
                     <button type="button" class="btn btn-dark btn-lg botonesMenuPrinci">Start server</button>
                 </div>
                 <div class="row mt-2">
-                    <button type="button" class="btn btnClose btn-danger btn-lg botonesMenuPrinci" onclick="cerrarApp()">Close</button>
+                    <button type="button" class="btn btnClose btn-danger btn-lg botonesMenuPrinci"
+                        onclick="cerrarApp()">Close</button>
                 </div>
             </div>
         </div>

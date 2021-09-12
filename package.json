@@ -5,7 +5,25 @@
   "main": "./src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "build": "electron-builder build --win --publish never",
+    "deploy": "electron-builder build --win --publish always"
+  },
+  "build": {
+    "appId": "minecraft.manager",
+    "productName": "Minecraft Manager",
+    "copyright": "Copyright © year raultorres2603",
+    "win": {
+      "icon": "./public/img/icono.png"
+    },
+    "mac": {
+      "icon": "./public/img/icono.png"
+    },
+    "linux": {
+      "icon": "./public/img/icono.png"
+    }
   },
   "repository": {
     "type": "git",
