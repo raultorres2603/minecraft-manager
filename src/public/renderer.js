@@ -18,6 +18,11 @@ ipcRenderer.on('versionForge', (event, args) => {
     let paragraph = document.getElementById('versionForge').textContent = `Do you want to install the ${version} forge?`
 })
 
+ipcRenderer.on('versionInstalarMods', (event, args) => {
+    let version = args[0];
+    document.getElementById('version').textContent = `Version: ${version}`
+})
+
 ipcRenderer.on('comprobarVersion_ok', (event, args) => {
     let codigo = args[0];
     let version = args[1];

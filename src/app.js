@@ -95,7 +95,7 @@ ipcMain.on('comprobarVersion', (event, args) => {
               createForgeError(version)
             } else {
               currentVersion = version
-              
+              instalarModsWindow(currentVersion);
             }
           })
         }
@@ -108,8 +108,30 @@ ipcMain.on('elegirVersion', (event, args) => {
   changeVersionWindow()
 })
 
-function errorDescargarForge(version) {
+function instalarModsWindow(currentVersion) {
+  mainWindow.loadFile(__dirname + '/../views/instalarMods.html');
+  setTimeout(() => {
+    mainWindow.webContents.send('versionInstalarMods', [currentVersion]);
+  }, 300);
+}
 
+function errorDescargarForge(version) {
+  forgeErrorDescWindow = new BrowserWindow({
+    width: 800,
+    height: 200,
+    darkTheme: true,
+    icon: "./src/public/img/icono.png",
+    center: true,
+    frame: false,
+    resizable: false,
+    title: "Error!",
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
+  })
+
+  forgeErrorDescWindow.loadFile(__dirname + "/../views/errorDescForge.html")
 }
 
 function createErrorVersion() {
