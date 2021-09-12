@@ -1,6 +1,6 @@
 {
   "name": "minecraft-manager",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "An app to install mods, backups and servers",
   "main": "./src/app.js",
   "scripts": {
@@ -16,13 +16,13 @@
     "productName": "Minecraft Manager",
     "copyright": "Copyright © year raultorres2603",
     "win": {
-      "icon": "./public/img/icono.png"
+      "icon": "./src/public/img/icono.png"
     },
     "mac": {
-      "icon": "./public/img/icono.png"
+      "icon": "./src/public/img/icono.png"
     },
     "linux": {
-      "icon": "./public/img/icono.png"
+      "icon": "./src/public/img/icono.png"
     }
   },
   "repository": {

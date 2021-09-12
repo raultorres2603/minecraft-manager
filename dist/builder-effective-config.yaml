@@ -1,0 +1,14 @@
+directories:
+  output: dist
+  buildResources: build
+appId: minecraft.manager
+productName: Minecraft Manager
+copyright: Copyright © year raultorres2603
+win:
+  icon: ./src/public/img/icono.png
+mac:
+  icon: ./src/public/img/icono.png
+linux:
+  icon: ./src/public/img/icono.png
+files: []
+electronVersion: 14.0.0

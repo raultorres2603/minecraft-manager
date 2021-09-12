@@ -7,10 +7,6 @@ const url = require('url');
 const https = require('https');
 const { exec, spawn, execFile } = require('child_process');
 
-require('electron-reload')(__dirname, {
-  electron: path.join(__dirname, '../node_modules', '.bin', 'electron')
-});
-
 var mainWindow;
 var versiones = require("./public/versiones/versiones.json");
 var versionWindow;
