@@ -14,23 +14,14 @@
     <title>Elegir version</title>
 </head>
 
-<body class="bodyMain">
+<body class="bodyError">
     <div class="container">
-        <div class="row mt-5 text-center">
-            <img src="../src/public/img/Minecraft-Manager.png" class="tituloImagen">
+        <div class="row mt-2">
+            <p class="paragraph text-danger">Could not create mods folder</p>
         </div>
-        <div class="botonesMenuContainer">
-            <div class="row">
-                <select id="selectVersiones" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                </select>
-            </div>
-            <div class="row mt-2">
-                <button type="button" class="btn btn-success btn-lg botonesMenuPrinci" onclick="aceptarVersion(document.getElementById('selectVersiones').value)">Choose version</button>
-            </div>
-            <div class="row mt-2">
-                <button type="button" class="btn btn-danger btn-lg botonesMenuPrinci"
-                    onclick="volverAlMenu()">Return to menu</button>
-            </div>
+        <div class="row mt-2">
+            <button type="button" class="btn btn-danger btn-lg"
+                onclick="cerrarCarpetaModsError()">Close</button>
         </div>
     </div>
     <script src="../src/public/renderer.js"></script>

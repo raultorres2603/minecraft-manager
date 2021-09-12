@@ -15,25 +15,29 @@
 
 <body class="bodyInstalarMods">
     <div class="container">
-        <div class="row mb-2 text-center">
-            <h1 class="titleMainMenu">Minecraft Manager</h1>
+        <div class="row mt-5 text-center">
+            <img src="../src/public/img/Minecraft-Manager.png" class="tituloImagen">
         </div>
         <div class="row">
             <div class="d-flex flex-row-reverse">
-                <div id="version" class="h3">
-
+                <div id="version" class="h5 text-info">
+                    
                 </div>
             </div>            
         </div>
         <div class="row">
             <div class="col">
                 <div class="row">
-                    <p class="paragraph text-info">Select Mods to install:</p>
+                    <p class="paragraph-small text-warning">Select Mods to install:</p>
                 </div>
             </div>
             <div class="col">
 
             </div>
+        </div>
+        <div class="row mt-2">
+            <button type="button" class="btn btn-danger btn-lg"
+                onclick="cerrarInstalarMods()">Return to menu</button>
         </div>
     </div>
     <script src="../src/public/renderer.js"></script>

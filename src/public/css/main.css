@@ -6,19 +6,36 @@
 }
 
 .bodyMain {
-    background-image: url("../img/fondo.jpeg")
+    background-image: url("../img/fondo2.jpg")
 }
 
 .paragraph {
     font-size: 8vh;
 }
 
+.btn {
+    border: none !important;
+    -webkit-text-stroke: 1.5px black;
+}
+
+.btn:hover {
+    background: transparent;
+}
+
+.bodyInstalarMods {
+    background-color: black;
+}
+
+.paragraph-small {
+    font-size: 4vh;
+}
+
 .bodyError {
     background-color: black;
 }
 
-.titleMainMenu {
-    font-size: 11vh;
+.tituloImagen {
+
 }
 
 .subTitleMenu {
@@ -26,7 +43,7 @@
 }
 
 .botonesMenuContainer {
-    margin-top: 20vh;
+    margin-top: 14vh;
 }
 
 .botonesMenuPrinci {

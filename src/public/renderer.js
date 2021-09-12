@@ -20,7 +20,11 @@ ipcRenderer.on('versionForge', (event, args) => {
 
 ipcRenderer.on('versionInstalarMods', (event, args) => {
     let version = args[0];
+    let files = args[1];
     document.getElementById('version').textContent = `Version: ${version}`
+    files.forEach(file => {
+        
+    });
 })
 
 ipcRenderer.on('comprobarVersion_ok', (event, args) => {
@@ -36,6 +40,14 @@ ipcRenderer.on('comprobarVersion_ok', (event, args) => {
             break;
     }
 })
+
+function cerrarInstalarMods() {
+    ipcRenderer.send('cerrarInstalarMods')
+}
+
+function cerrarCarpetaModsError() {
+    ipcRenderer.send('cerrarCarpetaModsError')
+}
 
 function elegirVersion() {
     ipcRenderer.send('elegirVersion')

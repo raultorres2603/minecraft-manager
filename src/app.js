@@ -15,6 +15,7 @@ var versiones = require("./public/versiones/versiones.json");
 var versionWindow;
 var forgeErrorWindow;
 var forgeErrorDescWindow;
+var crearModsWindow;
 var currentVersion;
 
 ipcMain.on('cerrarApp', (event, args) => {
@@ -35,6 +36,10 @@ ipcMain.on('comprobarVersionError', (event, args) => {
 
 ipcMain.on('cerrarError', (event, args) => {
   versionWindow.close()
+})
+
+ipcMain.on('cerrarInstalarMods', (event, args) => {
+  mainWindow.loadFile(__dirname + "/../views/menu.html");
 })
 
 ipcMain.on('cerrarErrorForgeDesc', (event, args) => {
@@ -58,14 +63,26 @@ ipcMain.on('instalarForge', (event, args) => {
               console.log(err)
             }
             if (stdout) {
-              fs.unlink(`${path.join(os.homedir(), "Downloads", `forge-${currentVersion}.jar`)}`, (error) => {
-                if (error) {
-                  console.log(error)
-                  forgeErrorWindow.close();
-                } else {
-                  forgeErrorWindow.close();
+              fs.readdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "mods"), (err, files) => {
+                if (err) {
+                  fs.mkdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "mods"), {recursive: true}, (err) => {
+                    if (err) {
+                      errorCrearCarpetaMods();
+                    }
+                  })
                 }
               });
+
+              setTimeout(() => {
+                fs.unlink(`${path.join(os.homedir(), "Downloads", `forge-${currentVersion}.jar`)}`, (error) => {
+                  if (error) {
+                    console.log(error)
+                    forgeErrorWindow.close();
+                  } else {
+                    forgeErrorWindow.close();
+                  }
+                });
+              }, 5000);
             }
           })
         })
@@ -108,10 +125,38 @@ ipcMain.on('elegirVersion', (event, args) => {
   changeVersionWindow()
 })
 
+ipcMain.on('cerrarCarpetaModsError', (event, args) => {
+  crearModsWindow.close();
+})
+
+function errorCrearCarpetaMods() {
+  crearModsWindow = new BrowserWindow({
+    width: 800,
+    height: 200,
+    darkTheme: true,
+    icon: "./src/public/img/icono.png",
+    center: true,
+    frame: false,
+    resizable: false,
+    title: "Error!",
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
+  })
+  crearModsWindow.loadFile(__dirname + "/../views/errorCrearCarpetaMods.html")
+}
+
 function instalarModsWindow(currentVersion) {
   mainWindow.loadFile(__dirname + '/../views/instalarMods.html');
   setTimeout(() => {
-    mainWindow.webContents.send('versionInstalarMods', [currentVersion]);
+    fs.readdir(path.join(os.homedir(), 'Downloads'), (err, files) => {
+      if (err) {
+        console.log(err)
+      } else {
+        mainWindow.webContents.send('versionInstalarMods', [currentVersion, files]);
+      }
+    })
   }, 300);
 }
 
