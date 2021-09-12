@@ -1,6 +1,6 @@
 {
   "name": "minecraft-manager",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "An app to install mods, backups and servers",
   "main": "./src/app.js",
   "scripts": {
