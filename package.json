@@ -25,6 +25,8 @@
     "electron": "^14.0.0"
   },
   "dependencies": {
-    "electron-reload": "^2.0.0-alpha.1"
+    "electron-reload": "^2.0.0-alpha.1",
+    "electron-updater": "^4.3.9",
+    "jquery": "^3.6.0"
   }
 }

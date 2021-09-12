@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, Menu, globalShortcut, webContents } = require('electron')
+const { app, BrowserWindow, ipcMain, Menu, globalShortcut, webContents, ipcRenderer, autoUpdater } = require('electron')
 const path = require('path')
 const fs = require('fs');
 const os = require('os');
@@ -91,6 +91,46 @@ ipcMain.on('instalarForge', (event, args) => {
   });
 })
 
+ipcMain.on('leerDirectorioMods', (event, args) => {
+  fs.readdir(path.join(os.homedir(), 'Documents', 'MinecraftManager', 'Mods'), (err, files) => {
+    if (err) {
+      fs.mkdir(path.join(os.homedir(), 'Documents', 'MinecraftManager', 'Mods'), {recursive:true}, (err) => {
+        if (err) {
+          console.log(err);
+        } else {
+          fs.readdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "mods"), (err, filesModsMinecraft) => {
+            if (err) {
+              fs.mkdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "mods"), {recursive: true}, (err) => {
+                if (err) {
+                  errorCrearCarpetaMods();
+                } else {
+                  mainWindow.webContents.send('filesDirectorioMods', [files, filesModsMinecraft]);
+                }
+              })
+            } else {
+              mainWindow.webContents.send('filesDirectorioMods', [files, filesModsMinecraft]);
+            }
+          })
+        }
+      });
+    } else {
+      fs.readdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "mods"), (err, filesModsMinecraft) => {
+        if (err) {
+          fs.mkdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "mods"), {recursive: true}, (err) => {
+            if (err) {
+              errorCrearCarpetaMods();
+            } else {
+              mainWindow.webContents.send('filesDirectorioMods', [files, filesModsMinecraft]);
+            }
+          })
+        } else {
+          mainWindow.webContents.send('filesDirectorioMods', [files, filesModsMinecraft]);
+        }
+      })
+    }
+  })
+})
+
 ipcMain.on('comprobarVersion', (event, args) => {
   let version = args[0];
   fs.readdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "versions", version), (err, files) => {
@@ -129,6 +169,58 @@ ipcMain.on('cerrarCarpetaModsError', (event, args) => {
   crearModsWindow.close();
 })
 
+ipcMain.on('removeMods', (event, args) => {
+  let files = args[0];
+
+  files.forEach(file => {
+    fs.rename(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "mods", file), path.join(os.homedir(), "Documents", "MinecraftManager", "Mods", file), (err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        fs.readdir(path.join(os.homedir(), 'Documents', 'MinecraftManager', 'Mods'), (err, files) => {
+          if (err) {
+            console.log(err);
+          } else {
+            fs.readdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "mods"), (err, filesModsMinecraft) => {
+              if (err) {
+                console.log(err)
+              } else {
+                mainWindow.webContents.send('filesDirectorioMods', [files, filesModsMinecraft]);
+              }
+            })
+          }
+        })
+      }
+    })
+  });
+})
+
+ipcMain.on('installMods', (event, args) => {
+  let files = args[0];
+
+  files.forEach(file => {
+    fs.rename(path.join(os.homedir(), "Documents", "MinecraftManager", "Mods", file), path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "mods", file), (err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        fs.readdir(path.join(os.homedir(), 'Documents', 'MinecraftManager', 'Mods'), (err, files) => {
+          if (err) {
+            console.log(err);
+          } else {
+            fs.readdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "mods"), (err, filesModsMinecraft) => {
+              if (err) {
+                console.log(err)
+              } else {
+                mainWindow.webContents.send('filesDirectorioMods', [files, filesModsMinecraft]);
+              }
+            })
+          }
+        })
+      }
+    })
+  });
+})
+
 function errorCrearCarpetaMods() {
   crearModsWindow = new BrowserWindow({
     width: 800,
@@ -149,15 +241,46 @@ function errorCrearCarpetaMods() {
 
 function instalarModsWindow(currentVersion) {
   mainWindow.loadFile(__dirname + '/../views/instalarMods.html');
+
   setTimeout(() => {
-    fs.readdir(path.join(os.homedir(), 'Downloads'), (err, files) => {
+    fs.readdir(path.join(os.homedir(), 'Documents', 'MinecraftManager', 'Mods'), (err, files) => {
       if (err) {
-        console.log(err)
+        fs.mkdir(path.join(os.homedir(), 'Documents', 'MinecraftManager', 'Mods'), {recursive:true}, (err) => {
+          if (err) {
+            console.log(err);
+          } else {
+            fs.readdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "mods"), (err, filesModsMinecraft) => {
+              if (err) {
+                fs.mkdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "mods"), {recursive: true}, (err) => {
+                  if (err) {
+                    errorCrearCarpetaMods();
+                  } else {
+                    mainWindow.webContents.send('versionInstalarMods', [currentVersion, files, filesModsMinecraft]);
+                  }
+                })
+              } else {
+                mainWindow.webContents.send('versionInstalarMods', [currentVersion, files, filesModsMinecraft]);
+              }
+            })
+          }
+        });
       } else {
-        mainWindow.webContents.send('versionInstalarMods', [currentVersion, files]);
+        fs.readdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "mods"), (err, filesModsMinecraft) => {
+          if (err) {
+            fs.mkdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "mods"), {recursive: true}, (err) => {
+              if (err) {
+                errorCrearCarpetaMods();
+              } else {
+                mainWindow.webContents.send('versionInstalarMods', [currentVersion, files, filesModsMinecraft]);
+              }
+            })
+          } else {
+            mainWindow.webContents.send('versionInstalarMods', [currentVersion, files, filesModsMinecraft]);
+          }
+        })
       }
     })
-  }, 300);
+  }, 200);
 }
 
 function errorDescargarForge(version) {
@@ -265,8 +388,6 @@ function createMain() {
     mainWindow.show()
   })
 
-  mainWindow.setMenu(null);
-
   mainWindow.loadFile(__dirname + "/../views/menu.html");
 }
 
@@ -282,6 +403,8 @@ function changeVersionWindow() {
 
 app.whenReady().then(() => {
   createMain();
+
+  Menu.setApplicationMenu(null);
 
   globalShortcut.register('Ctrl+Shift+I', () => {
     mainWindow.webContents.toggleDevTools();

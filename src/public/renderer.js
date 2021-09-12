@@ -1,4 +1,5 @@
 const { ipcRenderer, BrowserWindow, BrowserView, webContents } = require('electron');
+var $ = require('jquery');
 
 function cerrarApp() {
     ipcRenderer.send('cerrarApp');
@@ -18,13 +19,62 @@ ipcRenderer.on('versionForge', (event, args) => {
     let paragraph = document.getElementById('versionForge').textContent = `Do you want to install the ${version} forge?`
 })
 
+ipcRenderer.on('filesDirectorioMods', (event, args) => {
+    let files = args[0];
+    let filesModsInstaller = args[1];
+    let select = document.getElementById('selectFiles');
+    let selectFilesInstalled = document.getElementById('selectFilesInstalled');
+
+    var i, L = select.options.length - 1;
+    for (i = L; i >= 0; i--) {
+        select.remove(i);
+    }
+
+    var i1, L1 = selectFilesInstalled.options.length - 1;
+    for (i1 = L1; i1 >= 0; i1--) {
+        selectFilesInstalled.remove(i1);
+    }
+
+    files.forEach(file => {
+        select.append(new Option(file, file));
+    });
+
+    filesModsInstaller.forEach(fileMod => {
+        selectFilesInstalled.append(new Option(fileMod, fileMod));
+    });
+    
+})
+
 ipcRenderer.on('versionInstalarMods', (event, args) => {
     let version = args[0];
     let files = args[1];
-    document.getElementById('version').textContent = `Version: ${version}`
+    let filesModsInstaller = args[2];
+    document.getElementById('version').textContent = `Version: ${version}`;
+
+    let select = document.getElementById('selectFiles');
+    let selectFilesInstalled = document.getElementById('selectFilesInstalled');
+
+    var i, L = select.options.length - 1;
+    for (i = L; i >= 0; i--) {
+        select.remove(i);
+    }
+
+    var i1, L1 = selectFilesInstalled.options.length - 1;
+    for (i1 = L1; i1 >= 0; i1--) {
+        selectFilesInstalled.remove(i1);
+    }
+
     files.forEach(file => {
-        
+        select.append(new Option(file, file));
     });
+
+    filesModsInstaller.forEach(fileMod => {
+        selectFilesInstalled.append(new Option(fileMod, fileMod));
+    });
+
+    setInterval(() => {
+        ipcRenderer.send('leerDirectorioMods')
+    }, 10000)
 })
 
 ipcRenderer.on('comprobarVersion_ok', (event, args) => {
@@ -55,6 +105,18 @@ function elegirVersion() {
 
 function instalarForge() {
     ipcRenderer.send('instalarForge');
+}
+
+function installMods(files) {
+    if (files) {
+        ipcRenderer.send('installMods', [files]);
+    }
+}
+
+function removeMods(files) {
+    if (files) {
+        ipcRenderer.send('removeMods', [files]);
+    }
 }
 
 function cerrarErrorForge() {

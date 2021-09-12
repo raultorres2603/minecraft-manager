@@ -14,16 +14,30 @@
 }
 
 .btn {
-    border: none !important;
-    -webkit-text-stroke: 1.5px black;
+    border: none !important;   
 }
 
 .btn:hover {
     background: transparent;
+    -webkit-text-stroke: 1.5px black;
+}
+
+.btnClose:hover {
+    color: red;
+    -webkit-text-stroke: 1.5px black;
+}
+
+.btnSuccess:hover {
+    color: rgb(51, 255, 0);
+    -webkit-text-stroke: 1.5px black;
+}
+
+.selectFilesMods {
+    height: 30vh;
 }
 
 .bodyInstalarMods {
-    background-color: black;
+    background-image: url("../img/fondo2.png")
 }
 
 .paragraph-small {
@@ -44,6 +58,10 @@
 
 .botonesMenuContainer {
     margin-top: 14vh;
+}
+
+.botonesMenuErrores {
+    font-size: 10vh;
 }
 
 .botonesMenuPrinci {

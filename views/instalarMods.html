@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="../src/downloads/bootstrap-5.1.1-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../src/public/css/main.css">
     <script src="../src/downloads/bootstrap-5.1.1-dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../src/downloads/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="../src/downloads/fontawesome-free-5.15.4-web/css/all.min.css">
     <script src="../src/downloads/fontawesome-free-5.15.4-web/js/all.min.js"></script>
 </head>
@@ -20,23 +19,31 @@
         </div>
         <div class="row">
             <div class="d-flex flex-row-reverse">
-                <div id="version" class="h5 text-info">
-                    
-                </div>
-            </div>            
-        </div>
-        <div class="row">
-            <div class="col">
-                <div class="row">
-                    <p class="paragraph-small text-warning">Select Mods to install:</p>
+                <div id="version" class="h5 text-warning">
                 </div>
             </div>
-            <div class="col">
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <p class="paragraph-small text-white text-center">Select Mods to install:</p>
+                    <select id="selectFiles" class="form-select form-select-lg mb-3 selectFilesMods" multiple>
+                    </select>
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-block btnSuccess botonesMenuPrinci" onclick="installMods($('#selectFiles').val())">Install</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <p class="paragraph-small text-white text-center">Installed Mods:</p>
+                    <select id="selectFilesInstalled" class="form-select form-select-lg mb-3 selectFilesMods" multiple>
+                    </select>
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-block btnSuccess botonesMenuPrinci" onclick="removeMods($('#selectFilesInstalled').val())">Remove</button>
+                </div>
 
             </div>
         </div>
         <div class="row mt-2">
-            <button type="button" class="btn btn-danger btn-lg"
+            <button type="button" class="btn btnClose botonesMenuPrinci btn-danger btn-lg"
                 onclick="cerrarInstalarMods()">Return to menu</button>
         </div>
     </div>
