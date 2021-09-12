@@ -19,7 +19,7 @@ ipcRenderer.on('update_downloaded', () => {
     notification.classList.remove('hidden');
 });
 
-ipcMain.on('restart_app', () => {
+ipcRenderer.on('restart_app', () => {
     autoUpdater.quitAndInstall();
   });
 
