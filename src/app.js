@@ -1,5 +1,5 @@
 const { app, BrowserWindow, ipcMain, Menu, globalShortcut, webContents, ipcRenderer } = require('electron')
-const {autoUpdater} = require('electron-updater');
+const { autoUpdater } = require('electron-updater');
 const path = require('path')
 const fs = require('fs');
 const os = require('os');
@@ -12,6 +12,7 @@ var versiones = require("./public/versiones/versiones.json");
 var versionWindow;
 var forgeErrorWindow;
 var forgeErrorDescWindow;
+var errorModsExtensionWindow;
 var crearModsWindow;
 var currentVersion;
 
@@ -62,7 +63,7 @@ ipcMain.on('instalarForge', (event, args) => {
             if (stdout) {
               fs.readdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "mods"), (err, files) => {
                 if (err) {
-                  fs.mkdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "mods"), {recursive: true}, (err) => {
+                  fs.mkdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "mods"), { recursive: true }, (err) => {
                     if (err) {
                       errorCrearCarpetaMods();
                     }
@@ -91,13 +92,13 @@ ipcMain.on('instalarForge', (event, args) => {
 ipcMain.on('leerDirectorioMods', (event, args) => {
   fs.readdir(path.join(os.homedir(), 'Documents', 'MinecraftManager', 'Mods'), (err, files) => {
     if (err) {
-      fs.mkdir(path.join(os.homedir(), 'Documents', 'MinecraftManager', 'Mods'), {recursive:true}, (err) => {
+      fs.mkdir(path.join(os.homedir(), 'Documents', 'MinecraftManager', 'Mods'), { recursive: true }, (err) => {
         if (err) {
           console.log(err);
         } else {
           fs.readdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "mods"), (err, filesModsMinecraft) => {
             if (err) {
-              fs.mkdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "mods"), {recursive: true}, (err) => {
+              fs.mkdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "mods"), { recursive: true }, (err) => {
                 if (err) {
                   errorCrearCarpetaMods();
                 } else {
@@ -113,7 +114,7 @@ ipcMain.on('leerDirectorioMods', (event, args) => {
     } else {
       fs.readdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "mods"), (err, filesModsMinecraft) => {
         if (err) {
-          fs.mkdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "mods"), {recursive: true}, (err) => {
+          fs.mkdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "mods"), { recursive: true }, (err) => {
             if (err) {
               errorCrearCarpetaMods();
             } else {
@@ -195,6 +196,16 @@ ipcMain.on('removeMods', (event, args) => {
 ipcMain.on('installMods', (event, args) => {
   let files = args[0];
 
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    let posPunto = file.lastIndexOf(".");
+    let extension = file.substring(posPunto, file.length);
+    if (extension != ".jar") {
+      return errorModsExtension(file);
+      break;
+    }
+  }
+
   files.forEach(file => {
     fs.rename(path.join(os.homedir(), "Documents", "MinecraftManager", "Mods", file), path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "mods", file), (err) => {
       if (err) {
@@ -218,6 +229,10 @@ ipcMain.on('installMods', (event, args) => {
   });
 })
 
+ipcMain.on('cerrarErrorModsExtension', (event, args) => {
+  errorModsExtensionWindow.close();
+})
+
 function errorCrearCarpetaMods() {
   crearModsWindow = new BrowserWindow({
     width: 800,
@@ -236,19 +251,41 @@ function errorCrearCarpetaMods() {
   crearModsWindow.loadFile(__dirname + "/../views/errorCrearCarpetaMods.html")
 }
 
+function errorModsExtension(file) {
+  errorModsExtensionWindow = new BrowserWindow({
+    width: 800,
+    height: 200,
+    darkTheme: true,
+    icon: "./src/public/img/icono.png",
+    center: true,
+    frame: false,
+    resizable: false,
+    title: "Error!",
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
+  })
+  errorModsExtensionWindow.loadFile(__dirname + "/../views/errorModsExtension.html");
+
+  setTimeout(() => {
+    errorModsExtensionWindow.webContents.send('errorFileMod', [file])
+  }, 300);
+}
+
 function instalarModsWindow(currentVersion) {
   mainWindow.loadFile(__dirname + '/../views/instalarMods.html');
 
   setTimeout(() => {
     fs.readdir(path.join(os.homedir(), 'Documents', 'MinecraftManager', 'Mods'), (err, files) => {
       if (err) {
-        fs.mkdir(path.join(os.homedir(), 'Documents', 'MinecraftManager', 'Mods'), {recursive:true}, (err) => {
+        fs.mkdir(path.join(os.homedir(), 'Documents', 'MinecraftManager', 'Mods'), { recursive: true }, (err) => {
           if (err) {
             console.log(err);
           } else {
             fs.readdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "mods"), (err, filesModsMinecraft) => {
               if (err) {
-                fs.mkdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "mods"), {recursive: true}, (err) => {
+                fs.mkdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "mods"), { recursive: true }, (err) => {
                   if (err) {
                     errorCrearCarpetaMods();
                   } else {
@@ -264,7 +301,7 @@ function instalarModsWindow(currentVersion) {
       } else {
         fs.readdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "mods"), (err, filesModsMinecraft) => {
           if (err) {
-            fs.mkdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "mods"), {recursive: true}, (err) => {
+            fs.mkdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "mods"), { recursive: true }, (err) => {
               if (err) {
                 errorCrearCarpetaMods();
               } else {

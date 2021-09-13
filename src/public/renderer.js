@@ -36,6 +36,15 @@ function cerrarApp() {
     ipcRenderer.send('cerrarApp');
 }
 
+function cerrarErrorModsExtension() {
+    ipcRenderer.send('cerrarErrorModsExtension');
+}
+
+ipcRenderer.on('errorFileMod', (event, args) => {
+    let file = args[0];
+    $('#fileError').text(`The file ${file} is not a JAR file`)
+})
+
 ipcRenderer.on('mandarVersiones', (event, args) => {
     let versiones = args[0]
     let select = document.getElementById('selectVersiones');
