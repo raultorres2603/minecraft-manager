@@ -57,12 +57,12 @@ ipcMain.on('actualizarTexturasDirectorios', (event, args) => {
               errorCreateDirectorioTextures();
             } else {
               fs.readdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "resourcepacks"), (err, filesMinecraft) => {
-                  mainWindow.webContents.send('actualizarTexturasDirectorios_ok', [files, filesMinecraft])
+                mainWindow.webContents.send('actualizarTexturasDirectorios_ok', [files, filesMinecraft])
               });
             }
           })
         } else {
-            mainWindow.webContents.send('actualizarTexturasDirectorios_ok', [files, filesMinecraft])
+          mainWindow.webContents.send('actualizarTexturasDirectorios_ok', [files, filesMinecraft])
         }
       })
     }
@@ -98,11 +98,11 @@ ipcMain.on('instalarTextures', (event, args) => {
                   mainWindow.webContents.send('filesTextures', [files, filesMinecraft])
                 }, 300);
               }
+              mainWindow.loadFile(__dirname + "/../views/instalarTextures.html");
+              setTimeout(() => {
+                mainWindow.webContents.send('filesTextures', [files, filesMinecraft])
+              }, 300);
             })
-            mainWindow.loadFile(__dirname + "/../views/instalarTextures.html");
-            setTimeout(() => {
-              mainWindow.webContents.send('filesTextures', [files, filesMinecraft])
-            }, 300);
           })
         }
       })
@@ -479,7 +479,7 @@ function errorModsExtension(file) {
   }, 300);
 }
 
-function errorInstallTextures(file ) {
+function errorInstallTextures(file) {
   errorTextureInstallWindow = new BrowserWindow({
     width: 800,
     height: 200,
