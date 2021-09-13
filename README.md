@@ -8,6 +8,7 @@ To install the aplication, you will download the **dist** folder, and then, exec
 
 # Functionalities
 - [x] Installing MODS automatically.
+- [ ] Installing texture packs automatically.
 - [ ] Backup your worlds.
 - [ ] Create a configurable server
 
