@@ -16,8 +16,12 @@
 <body class="bodyError">
     <div class="container">
         <div class="row mt-2">
-            <p class="paragraph text-danger">Error:</p>
-            <p id="fileError" class="paragraph text-danger">Error:</p>
+            <p class="paragraph text-danger p-1">Error:</p>
+            <div class="d-flex flex-row bd-highlight mb-3">
+                <div class="text-danger p-1 h5">The file</div>
+                <div id="fileError" class="text-warning p-1 h5"></div>
+                <div class="text-danger p-1 h5">is not a .JAR file</div>
+            </div>
         </div>
         <div class="row mt-2">
             <button type="button" class="btn btnClose btn-danger btn-lg botonesMenuErrores"

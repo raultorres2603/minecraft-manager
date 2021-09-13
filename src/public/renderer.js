@@ -42,7 +42,7 @@ function cerrarErrorModsExtension() {
 
 ipcRenderer.on('errorFileMod', (event, args) => {
     let file = args[0];
-    $('#fileError').text(`The file ${file} is not a JAR file`)
+    $('#fileError').text(`${file}`)
 })
 
 ipcRenderer.on('mandarVersiones', (event, args) => {
