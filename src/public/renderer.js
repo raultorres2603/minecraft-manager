@@ -36,6 +36,26 @@ function cerrarApp() {
     ipcRenderer.send('cerrarApp');
 }
 
+function cerrarCarpetaTextureError() {
+    ipcRenderer.send('cerrarCarpetaTextureError');
+}
+
+function instalarTextures() {
+    ipcRenderer.send('instalarTextures');
+}
+
+function installTextures(files) {
+    ipcRenderer.send('installTextures', [files]);
+}
+
+function removeTextures(files) {
+    ipcRenderer.send('removeTextures', [files]);
+}
+
+function cerrarInstalarTextures() {
+    ipcRenderer.send('cerrarInstalarTextures');
+}
+
 function cerrarErrorModsExtension() {
     ipcRenderer.send('cerrarErrorModsExtension');
 }
@@ -43,6 +63,53 @@ function cerrarErrorModsExtension() {
 ipcRenderer.on('errorFileMod', (event, args) => {
     let file = args[0];
     $('#fileError').text(`${file}`)
+})
+
+ipcRenderer.on('errorFileTextures', (event, args) => {
+    let file = args[0];
+    $('#fileError').text(`${file}`)
+})
+
+ipcRenderer.on('filesTextures', (event, args) => {
+    let files = args[0];
+    let filesMinecraft = args[1];
+    
+    let selectFiles = document.getElementById('selectFiles');
+    let selectFilesMinecraft = document.getElementById('selectFilesInstalled');
+
+    $('#selectFiles').empty();
+    $('#selectFilesMinecraft').empty();
+
+    files.forEach(file => {
+        selectFiles.append(new Option(file,file));
+    });
+
+    filesMinecraft.forEach(file => {
+        selectFilesMinecraft.append(new Option(file,file));
+    });
+
+    setInterval(() => {
+        ipcRenderer.send('actualizarTexturasDirectorios')
+    }, 10000);
+})
+
+ipcRenderer.on('actualizarTexturasDirectorios_ok', (event, args) => {
+    let files = args[0];
+    let filesMinecraft = args[1];
+    
+    let selectFiles = document.getElementById('selectFiles');
+    let selectFilesMinecraft = document.getElementById('selectFilesInstalled');
+
+    $('#selectFiles').empty();
+    $('#selectFilesInstalled').empty();
+
+    files.forEach(file => {
+        selectFiles.append(new Option(file,file));
+    });
+
+    filesMinecraft.forEach(file => {
+        selectFilesMinecraft.append(new Option(file,file));
+    });
 })
 
 ipcRenderer.on('mandarVersiones', (event, args) => {
@@ -137,6 +204,10 @@ function cerrarInstalarMods() {
 
 function cerrarCarpetaModsError() {
     ipcRenderer.send('cerrarCarpetaModsError')
+}
+
+function cerrarErrorInstallTextures() {
+    ipcRenderer.send('cerrarErrorInstallTextures')
 }
 
 function elegirVersion() {

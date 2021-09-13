@@ -13,11 +13,128 @@ var versionWindow;
 var forgeErrorWindow;
 var forgeErrorDescWindow;
 var errorModsExtensionWindow;
+var errorTexturePacksWindow;
+var errorTextureInstallWindow;
 var crearModsWindow;
 var currentVersion;
 
 ipcMain.on('cerrarApp', (event, args) => {
   if (process.platform !== 'darwin') app.quit()
+})
+
+ipcMain.on('actualizarTexturasDirectorios', (event, args) => {
+  fs.readdir(path.join(os.homedir(), "Documents", "MinecraftManager", "Texture-Packs"), (err, files) => {
+    if (err) {
+      fs.mkdir(path.join(os.homedir(), "Documents", "MinecraftManager", "Texture-Packs"), { recursive: true }, (err) => {
+        if (err) {
+          errorCreateDirectorioTextures();
+        } else {
+          fs.readdir(path.join(os.homedir(), "Documents", "MinecraftManager", "Texture-Packs"), (err, files) => {
+            fs.readdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "resourcepacks"), (err, filesMinecraft) => {
+              if (err) {
+                fs.mkdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "resourcepacks"), { recursive: true }, (err) => {
+                  if (err) {
+                    errorCreateDirectorioTextures();
+                  } else {
+                    fs.readdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "resourcepacks"), (err, filesMinecraft) => {
+                      mainWindow.webContents.send('actualizarTexturasDirectorios_ok', [files, filesMinecraft])
+                    });
+                  }
+                })
+              } else {
+                mainWindow.webContents.send('actualizarTexturasDirectorios_ok', [files, filesMinecraft])
+              }
+            })
+            mainWindow.webContents.send('actualizarTexturasDirectorios_ok', [files, filesMinecraft])
+          })
+        }
+      })
+    } else {
+      fs.readdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "resourcepacks"), (err, filesMinecraft) => {
+        if (err) {
+          fs.mkdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "resourcepacks"), { recursive: true }, (err) => {
+            if (err) {
+              errorCreateDirectorioTextures();
+            } else {
+              fs.readdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "resourcepacks"), (err, filesMinecraft) => {
+                  mainWindow.webContents.send('actualizarTexturasDirectorios_ok', [files, filesMinecraft])
+              });
+            }
+          })
+        } else {
+            mainWindow.webContents.send('actualizarTexturasDirectorios_ok', [files, filesMinecraft])
+        }
+      })
+    }
+  })
+
+})
+
+ipcMain.on('instalarTextures', (event, args) => {
+  fs.readdir(path.join(os.homedir(), "Documents", "MinecraftManager", "Texture-Packs"), (err, files) => {
+    if (err) {
+      fs.mkdir(path.join(os.homedir(), "Documents", "MinecraftManager", "Texture-Packs"), { recursive: true }, (err) => {
+        if (err) {
+          errorCreateDirectorioTextures();
+        } else {
+          fs.readdir(path.join(os.homedir(), "Documents", "MinecraftManager", "Texture-Packs"), (err, files) => {
+            fs.readdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "resourcepacks"), (err, filesMinecraft) => {
+              if (err) {
+                fs.mkdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "resourcepacks"), { recursive: true }, (err) => {
+                  if (err) {
+                    errorCreateDirectorioTextures();
+                  } else {
+                    fs.readdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "resourcepacks"), (err, filesMinecraft) => {
+                      mainWindow.loadFile(__dirname + "/../views/instalarTextures.html");
+                      setTimeout(() => {
+                        mainWindow.webContents.send('filesTextures', [files, filesMinecraft])
+                      }, 300);
+                    });
+                  }
+                })
+              } else {
+                mainWindow.loadFile(__dirname + "/../views/instalarTextures.html");
+                setTimeout(() => {
+                  mainWindow.webContents.send('filesTextures', [files, filesMinecraft])
+                }, 300);
+              }
+            })
+            mainWindow.loadFile(__dirname + "/../views/instalarTextures.html");
+            setTimeout(() => {
+              mainWindow.webContents.send('filesTextures', [files, filesMinecraft])
+            }, 300);
+          })
+        }
+      })
+    } else {
+      fs.readdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "resourcepacks"), (err, filesMinecraft) => {
+        if (err) {
+          fs.mkdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "resourcepacks"), { recursive: true }, (err) => {
+            if (err) {
+              errorCreateDirectorioTextures();
+            } else {
+              fs.readdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "resourcepacks"), (err, filesMinecraft) => {
+                mainWindow.loadFile(__dirname + "/../views/instalarTextures.html");
+                setTimeout(() => {
+                  mainWindow.webContents.send('filesTextures', [files, filesMinecraft])
+                }, 300);
+              });
+            }
+          })
+        } else {
+          mainWindow.loadFile(__dirname + "/../views/instalarTextures.html");
+          setTimeout(() => {
+            mainWindow.webContents.send('filesTextures', [files, filesMinecraft])
+          }, 300);
+        }
+      })
+    }
+  })
+
+})
+
+ipcMain.on('cerrarInstalarTextures', (event, args) => {
+  mainWindow.loadFile(__dirname + "/../views/menu.html");
 })
 
 ipcMain.on('cerrarErrorForge', (event, args) => {
@@ -193,16 +310,78 @@ ipcMain.on('removeMods', (event, args) => {
   });
 })
 
+ipcMain.on('removeTextures', (event, args) => {
+  let files = args[0];
+
+  files.forEach(file => {
+    fs.rename(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "resourcepacks", file), path.join(os.homedir(), "Documents", "MinecraftManager", "Texture-Packs", file), (err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        fs.readdir(path.join(os.homedir(), 'Documents', 'MinecraftManager', 'Texture-Packs'), (err, files) => {
+          if (err) {
+            console.log(err);
+          } else {
+            fs.readdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "resourcepacks"), (err, filesTexturesMinecraft) => {
+              if (err) {
+                console.log(err)
+              } else {
+                mainWindow.webContents.send('actualizarTexturasDirectorios_ok', [files, filesTexturesMinecraft]);
+              }
+            })
+          }
+        })
+      }
+    })
+  });
+})
+
+ipcMain.on('installTextures', (event, args) => {
+  let files = args[0];
+
+  for (let i = 0; i < files.length; i++) {
+    let file = files[i];
+    let posPunto = file.lastIndexOf(".");
+    let extension = file.substring(posPunto, file.length);
+    console.log(extension);
+    if (extension != ".zip" && extension != ".tar" && extension != ".gz" && extension != ".7z" && extension != ".rar") {
+      return errorInstallTextures(file);
+    }
+  }
+
+  files.forEach(file => {
+    fs.rename(path.join(os.homedir(), "Documents", "MinecraftManager", "Texture-Packs", file), path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "resourcepacks", file), (err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        fs.readdir(path.join(os.homedir(), 'Documents', 'MinecraftManager', 'Texture-Packs'), (err, files) => {
+          if (err) {
+            console.log(err);
+          } else {
+            fs.readdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "resourcepacks"), (err, filesTexturesMinecraft) => {
+              if (err) {
+                console.log(err)
+              } else {
+                mainWindow.webContents.send('actualizarTexturasDirectorios_ok', [files, filesTexturesMinecraft]);
+              }
+            })
+          }
+        })
+      }
+    })
+  });
+
+})
+
 ipcMain.on('installMods', (event, args) => {
   let files = args[0];
 
   for (let i = 0; i < files.length; i++) {
-    const file = files[i];
+    let file = files[i];
     let posPunto = file.lastIndexOf(".");
     let extension = file.substring(posPunto, file.length);
     if (extension != ".jar") {
       return errorModsExtension(file);
-      break;
     }
   }
 
@@ -232,6 +411,33 @@ ipcMain.on('installMods', (event, args) => {
 ipcMain.on('cerrarErrorModsExtension', (event, args) => {
   errorModsExtensionWindow.close();
 })
+
+ipcMain.on('cerrarCarpetaTextureError', (event, args) => {
+  errorTexturePacksWindow.close();
+})
+
+ipcMain.on('cerrarErrorInstallTextures', (event, args) => {
+  errorTextureInstallWindow.close()
+})
+
+function errorCreateDirectorioTextures() {
+  errorTexturePacksWindow = new BrowserWindow({
+    width: 800,
+    height: 200,
+    darkTheme: true,
+    icon: "./src/public/img/icono.png",
+    center: true,
+    frame: false,
+    resizable: false,
+    title: "Error!",
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
+  })
+  errorTexturePacksWindow.loadFile(__dirname + "/../views/errorCrearDirectorioTextures.html")
+}
+
 
 function errorCrearCarpetaMods() {
   crearModsWindow = new BrowserWindow({
@@ -270,6 +476,28 @@ function errorModsExtension(file) {
 
   setTimeout(() => {
     errorModsExtensionWindow.webContents.send('errorFileMod', [file])
+  }, 300);
+}
+
+function errorInstallTextures(file ) {
+  errorTextureInstallWindow = new BrowserWindow({
+    width: 800,
+    height: 200,
+    darkTheme: true,
+    icon: "./src/public/img/icono.png",
+    center: true,
+    frame: false,
+    resizable: false,
+    title: "Error!",
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
+  })
+  errorTextureInstallWindow.loadFile(__dirname + "/../views/errorInstallTextures.html");
+
+  setTimeout(() => {
+    errorTextureInstallWindow.webContents.send('errorFileTextures', [file])
   }, 300);
 }
 

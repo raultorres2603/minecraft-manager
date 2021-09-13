@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../src/downloads/bootstrap-5.1.1-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../src/public/css/main.css">
+    <script src="../src/downloads/bootstrap-5.1.1-dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="../src/downloads/fontawesome-free-5.15.4-web/css/all.min.css">
+    <script src="../src/downloads/fontawesome-free-5.15.4-web/js/all.min.js"></script>
+</head>
+
+<body class="bodyInstalarMods">
+    <div class="container">
+        <div class="row mt-5 text-center">
+            <img src="../src/public/img/Minecraft-Manager.png" class="tituloImagen">
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <p class="paragraph-small text-white text-center">Select textures to install:</p>
+                    <select id="selectFiles" class="form-select form-select-lg mb-3 selectFilesMods" multiple>
+                    </select>
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-block btnSuccess botonesMenuPrinci" onclick="installTextures($('#selectFiles').val())">Install</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <p class="paragraph-small text-white text-center">Installed textures:</p>
+                    <select id="selectFilesInstalled" class="form-select form-select-lg mb-3 selectFilesMods" multiple>
+                    </select>
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-block btnSuccess botonesMenuPrinci" onclick="removeTextures($('#selectFilesInstalled').val())">Remove</button>
+                </div>
+
+            </div>
+        </div>
+        <div class="row mt-2">
+            <button type="button" class="btn btnClose botonesMenuPrinci btn-danger btn-lg"
+                onclick="cerrarInstalarTextures()">Return to menu</button>
+        </div>
+    </div>
+    <script src="../src/public/renderer.js"></script>
+</body>
+
+</html>
