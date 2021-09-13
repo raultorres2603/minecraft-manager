@@ -1,8 +1,8 @@
-version: 1.0.4
+version: 1.0.5
 files:
-  - url: Minecraft-Manager-Setup-1.0.4.exe
-    sha512: h6ZrP8qXo/ZhOJ1A985CvlL/IG/c7NbylhGqjQawpVypgQSv4thgLEsHHujLn+gaLruxCXHDB6g6SIktvFL7Aw==
-    size: 65198874
-path: Minecraft-Manager-Setup-1.0.4.exe
-sha512: h6ZrP8qXo/ZhOJ1A985CvlL/IG/c7NbylhGqjQawpVypgQSv4thgLEsHHujLn+gaLruxCXHDB6g6SIktvFL7Aw==
-releaseDate: '2021-09-13T16:31:02.267Z'
+  - url: Minecraft-Manager-Setup-1.0.5.exe
+    sha512: /dkSJ07A8bSkDt0HTCjWBQNUJkOAW6gsyxHs+ePWhcLDQ0lfTWX4fWMiuQg93OST9k40zW2bPtrIIygpzI92Ow==
+    size: 65199444
+path: Minecraft-Manager-Setup-1.0.5.exe
+sha512: /dkSJ07A8bSkDt0HTCjWBQNUJkOAW6gsyxHs+ePWhcLDQ0lfTWX4fWMiuQg93OST9k40zW2bPtrIIygpzI92Ow==
+releaseDate: '2021-09-13T16:38:34.874Z'
