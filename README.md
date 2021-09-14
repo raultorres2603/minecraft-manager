@@ -12,6 +12,9 @@ To install the aplication, you will download the **dist** folder, and then, exec
 - [ ] Backup your worlds.
 - [ ] Create a configurable server
 
+# See it on YouTube
+[Video!](https://www.youtube.com/watch?v=gL-SJom58pY)
+
 # Donations
 I will apreciate all donations to improve this project and make more things!
 ## |[Donate here!](https://www.paypal.com/donate?hosted_button_id=2RTSGG6G6Q65J)|
