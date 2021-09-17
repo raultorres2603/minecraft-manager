@@ -669,9 +669,9 @@ app.whenReady().then(() => {
 
   Menu.setApplicationMenu(null);
 
-  globalShortcut.register('Ctrl+Shift+I', () => {
-    mainWindow.webContents.toggleDevTools();
-  })
+  //globalShortcut.register('Ctrl+Shift+I', () => {
+  //  mainWindow.webContents.toggleDevTools();
+  //})
 
 
 })
