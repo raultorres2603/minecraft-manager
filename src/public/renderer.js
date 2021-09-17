@@ -215,6 +215,8 @@ function elegirVersion() {
 }
 
 function instalarForge() {
+    document.getElementById('botonInstForge').textContent = "Descargando..."
+    document.getElementById('botonInstForge').disabled = true
     ipcRenderer.send('instalarForge');
 }
 

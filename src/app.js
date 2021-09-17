@@ -173,11 +173,12 @@ ipcMain.on('instalarForge', (event, args) => {
         res.pipe(fichero)
 
         res.on(`end`, () => {
-          exec(`java -jar ${path.join(os.homedir(), "Downloads", `forge-${currentVersion}.jar`)}`, (err, stdout, stderr) => {
+          let forge = exec(`java -jar ${path.join(os.homedir(), "Downloads", `forge-${currentVersion}.jar`)}`, (err, stdout, stderr) => {
             if (err) {
               console.log(err)
             }
             if (stdout) {
+              forge.kill();
               fs.readdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "mods"), (err, files) => {
                 if (err) {
                   fs.mkdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "mods"), { recursive: true }, (err) => {
@@ -187,8 +188,7 @@ ipcMain.on('instalarForge', (event, args) => {
                   })
                 }
               });
-
-              setTimeout(() => {
+              //setTimeout(() => {
                 fs.unlink(`${path.join(os.homedir(), "Downloads", `forge-${currentVersion}.jar`)}`, (error) => {
                   if (error) {
                     console.log(error)
@@ -197,7 +197,7 @@ ipcMain.on('instalarForge', (event, args) => {
                     forgeErrorWindow.close();
                   }
                 });
-              }, 5000);
+              //}, 3000);
             }
           })
         })
