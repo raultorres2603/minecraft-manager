@@ -198,6 +198,11 @@ ipcRenderer.on('comprobarVersion_ok', (event, args) => {
     }
 })
 
+ipcRenderer.on('instalandoOptifine', (event, args) => {
+    document.getElementById('botonElegirVersOpti').textContent = "Downloading...";
+    document.getElementById('botonElegirVersOpti').disabled = true;
+})
+
 function cerrarInstalarMods() {
     ipcRenderer.send('cerrarInstalarMods')
 }
@@ -214,8 +219,12 @@ function elegirVersion() {
     ipcRenderer.send('elegirVersion')
 }
 
+function elegirVersionOptifine() {
+    ipcRenderer.send('elegirVersionOptifine')
+}
+
 function instalarForge() {
-    document.getElementById('botonInstForge').textContent = "Descargando..."
+    document.getElementById('botonInstForge').textContent = "Downloading..."
     document.getElementById('botonInstForge').disabled = true
     ipcRenderer.send('instalarForge');
 }
@@ -241,12 +250,26 @@ function cerrarErrorForgeDesc() {
 }
 
 function cerrarError() {
-    ipcRenderer.send('cerrarError')
+    ipcRenderer.send('cerrarError');
+}
+
+function cerrarErrorOptifine() {
+    ipcRenderer.send('cerrarErrorOptifine');
+}
+
+function cerrarOptifineInstalled() {
+    ipcRenderer.send('cerrarOptifineInstalled');
 }
 
 function aceptarVersion(version) {
     if (version != "Choose a version") {
         ipcRenderer.send('comprobarVersion', [version])
+    }
+}
+
+function aceptarVersionOptifine(version) {
+    if (version != "Choose a version") {
+        ipcRenderer.send('comprobarVersionOptifine', [version])
     }
 }
 

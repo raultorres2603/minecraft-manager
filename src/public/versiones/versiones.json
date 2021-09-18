@@ -1,7 +1,8 @@
 [
 {
     "version": "1.17.1",
-    "forge": "https://maven.minecraftforge.net/net/minecraftforge/forge/1.17.1-37.0.58/forge-1.17.1-37.0.58-installer.jar"
+    "forge": "https://maven.minecraftforge.net/net/minecraftforge/forge/1.17.1-37.0.58/forge-1.17.1-37.0.58-installer.jar",
+    "optifine": "https://optifine.net/downloadx?f=OptiFine_1.17.1_HD_U_G9.jar&x=f7dc337bc5e0abe0fae5fe9c7c3c504d"
 },
 {
     "version": "1.16.1",

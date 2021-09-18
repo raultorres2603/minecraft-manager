@@ -32,11 +32,19 @@
             <div class="botonesMenuContainer">
                 <div class="row mt-2">
                     <button id="instalarModsPrinci" type="button" class="btn btn-dark btn-lg botonesMenuPrinci"
-                        onclick="elegirVersion()">Install MODS</button>
+                        onclick="elegirVersionOptifine()">Optimize Minecraft</button>
                 </div>
                 <div class="row mt-2">
-                    <button id="instalarTexturePacks" type="button"
-                        onclick="instalarTextures()" class="btn btn-dark btn-lg botonesMenuPrinci">Install texture packs</button>
+                    <div class="col-6">
+                            <button id="instalarModsPrinci" type="button"
+                                class="btn btn-dark btn-lg btn-block botonesMenuPrinci w-100"
+                                onclick="elegirVersion()">Install
+                                MODS</button>
+                    </div>
+                    <div class="col-6">
+                            <button id="instalarTexturePacks" type="button" onclick="instalarTextures()"
+                                class="btn btn-dark btn-lg botonesMenuPrinci w-100">Install texture packs</button>
+                    </div>
                 </div>
                 <div class="row mt-2">
                     <button type="button" class="btn btn-dark btn-lg botonesMenuPrinci" disabled>Create world
@@ -57,7 +65,6 @@
                         <img alt="" border="0" src="https://www.paypal.com/en_ES/i/scr/pixel.gif" width="1"
                             height="1" />
                     </form>
-
                 </div>
             </div>
         </div>

@@ -15,7 +15,9 @@ var forgeErrorDescWindow;
 var errorModsExtensionWindow;
 var errorTexturePacksWindow;
 var errorTextureInstallWindow;
+var errorOptifineInstaladoWindow;
 var crearModsWindow;
+var crearOptifineWindow;
 var currentVersion;
 
 ipcMain.on('cerrarApp', (event, args) => {
@@ -153,6 +155,10 @@ ipcMain.on('cerrarError', (event, args) => {
   versionWindow.close()
 })
 
+ipcMain.on('cerrarErrorOptifine', (event, args) => {
+  errorOptifineInstaladoWindow.close();
+})
+
 ipcMain.on('cerrarInstalarMods', (event, args) => {
   mainWindow.loadFile(__dirname + "/../views/menu.html");
 })
@@ -189,14 +195,14 @@ ipcMain.on('instalarForge', (event, args) => {
                 }
               });
               //setTimeout(() => {
-                fs.unlink(`${path.join(os.homedir(), "Downloads", `forge-${currentVersion}.jar`)}`, (error) => {
-                  if (error) {
-                    console.log(error)
-                    forgeErrorWindow.close();
-                  } else {
-                    forgeErrorWindow.close();
-                  }
-                });
+              fs.unlink(`${path.join(os.homedir(), "Downloads", `forge-${currentVersion}.jar`)}`, (error) => {
+                if (error) {
+                  console.log(error)
+                  forgeErrorWindow.close();
+                } else {
+                  forgeErrorWindow.close();
+                }
+              });
               //}, 3000);
             }
           })
@@ -246,6 +252,78 @@ ipcMain.on('leerDirectorioMods', (event, args) => {
   })
 })
 
+ipcMain.on('comprobarVersionOptifine', (event, args) => {
+  let version = args[0];
+  fs.readdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "versions", version), (err, files) => {
+    if (err) {
+      event.sender.send('comprobarVersion_ok', ["error", version])
+    } else {
+      versiones.forEach(elemento => {
+        if (elemento.version == version) {
+          let optifine = elemento.optifine;
+          let optifineDirectory = optifine.indexOf(`?`);
+          let ultimaPos = optifine.indexOf('_HD');
+          let versionString = optifine.substring(optifineDirectory + 12, ultimaPos)
+          let currentVersion = versionString
+
+          fs.readdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "versions"), (err, files) => {
+            if (err) {
+
+            } else {
+              event.sender.send('instalandoOptifine');
+              https.get(elemento.optifine, { encoding: null }, (res) => {
+                res.on('error', () => {
+                  alert("Error: Can't download Optifine, check your internet connection.")
+                })
+
+                let fichero = fs.createWriteStream(path.join(os.homedir(), "Downloads", `optifine-${currentVersion}.jar`));
+                res.pipe(fichero)
+
+                res.on(`end`, () => {
+                  let optifine = exec(`java -jar ${path.join(os.homedir(), "Downloads", `optifine-${currentVersion}.jar`)}`, (err, stdout, stderr) => {
+                    if (err) {
+                      console.log(err)
+                    } else {
+                      if (stdout) {
+                        optifine.kill();
+                        //setTimeout(() => {
+                        fs.unlink(`${path.join(os.homedir(), "Downloads", `optifine-${currentVersion}.jar`)}`, (error) => {
+                          if (error) {
+                            console.log(error)
+                            createWindowOptifineError()
+                          } else {
+                            createWindowOptifineSuccess()
+                          }
+                        });
+                        //}, 3000);
+                      }
+                    }
+                  })
+                })
+              })
+            }
+          })
+
+          /*
+          let numeritos = directorioVersion.substring(directorioVersion.indexOf("-"), directorioVersion.length);
+          let carpetaVersion = `${versionString}-forge${numeritos}`
+
+          fs.readdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "versions", carpetaVersion), (err, files) => {
+            if (err) {
+              currentVersion = version
+              createForgeError(version)
+            } else {
+              currentVersion = version
+              instalarModsWindow(currentVersion);
+            }
+          })
+          */
+        }
+      });
+    }
+  })
+})
+
 ipcMain.on('comprobarVersion', (event, args) => {
   let version = args[0];
   fs.readdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "versions", version), (err, files) => {
@@ -280,8 +358,17 @@ ipcMain.on('elegirVersion', (event, args) => {
   changeVersionWindow()
 })
 
+ipcMain.on('elegirVersionOptifine', (event, args) => {
+  changeVersionOptifineWindow()
+})
+
 ipcMain.on('cerrarCarpetaModsError', (event, args) => {
   crearModsWindow.close();
+})
+
+ipcMain.on('cerrarOptifineInstalled', (event, args) => {
+  crearOptifineWindow.close();
+  mainWindow.loadFile(__dirname + "/../views/menu.html")
 })
 
 ipcMain.on('removeMods', (event, args) => {
@@ -438,6 +525,27 @@ function errorCreateDirectorioTextures() {
   errorTexturePacksWindow.loadFile(__dirname + "/../views/errorCrearDirectorioTextures.html")
 }
 
+function createWindowOptifineSuccess() {
+  crearOptifineWindow = new BrowserWindow({
+    width: 800,
+    height: 200,
+    darkTheme: true,
+    icon: "./src/public/img/icono.png",
+    center: true,
+    frame: false,
+    resizable: false,
+    title: "Error!",
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
+  })
+  crearOptifineWindow.loadFile(__dirname + "/../views/optifineSuccess.html")
+}
+
+function cerrarOptifineInstalled() {
+  crearOptifineWindow.close();
+}
 
 function errorCrearCarpetaMods() {
   crearModsWindow = new BrowserWindow({
@@ -455,6 +563,24 @@ function errorCrearCarpetaMods() {
     },
   })
   crearModsWindow.loadFile(__dirname + "/../views/errorCrearCarpetaMods.html")
+}
+
+function createOptifineInstaladoError() {
+  errorOptifineInstaladoWindow = new BrowserWindow({
+    width: 800,
+    height: 200,
+    darkTheme: true,
+    icon: "./src/public/img/icono.png",
+    center: true,
+    frame: false,
+    resizable: false,
+    title: "Error!",
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
+  })
+  errorOptifineInstaladoWindow.loadFile(__dirname + "/../views/errorOptifineInstalado.html");
 }
 
 function errorModsExtension(file) {
@@ -661,7 +787,14 @@ function changeVersionWindow() {
     mainWindow.webContents.send('mandarVersiones', [versiones])
   }, 100);
 
+}
 
+function changeVersionOptifineWindow() {
+  mainWindow.loadFile(__dirname + "/../views/elegirVersionOptifine.html")
+
+  setTimeout(() => {
+    mainWindow.webContents.send('mandarVersiones', [versiones])
+  }, 100);
 }
 
 app.whenReady().then(() => {
