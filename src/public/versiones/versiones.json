@@ -31,11 +31,13 @@
 },
 {
     "version": "1.15",
-    "forge": "https://maven.minecraftforge.net/net/minecraftforge/forge/1.15-29.0.4/forge-1.15-29.0.4-installer.jar"
+    "forge": "https://maven.minecraftforge.net/net/minecraftforge/forge/1.15-29.0.4/forge-1.15-29.0.4-installer.jar",
+    "optifine": "https://optifine.net/downloadx?f=OptiFine_1.15.2_HD_U_G6.jar&x=aeee9e95a03c9d13867ac38d6a209d2e"
 },
 {
     "version": "1.15.1",
-    "forge": "https://maven.minecraftforge.net/net/minecraftforge/forge/1.15.1-30.0.51/forge-1.15.1-30.0.51-installer.jar"
+    "forge": "https://maven.minecraftforge.net/net/minecraftforge/forge/1.15.1-30.0.51/forge-1.15.1-30.0.51-installer.jar",
+    "optifine": "https://optifine.net/downloadx?f=OptiFine_1.15.2_HD_U_G6.jar&x=aeee9e95a03c9d13867ac38d6a209d2e"
 },
 {
     "version": "1.15.2",
@@ -44,38 +46,47 @@
 },
 {
     "version": "1.14.2",
-    "forge": "https://maven.minecraftforge.net/net/minecraftforge/forge/1.14.2-26.0.63/forge-1.14.2-26.0.63-installer.jar"
+    "forge": "https://maven.minecraftforge.net/net/minecraftforge/forge/1.14.2-26.0.63/forge-1.14.2-26.0.63-installer.jar",
+    "optifine": "https://optifine.net/downloadx?f=OptiFine_1.14.2_HD_U_F1.jar&x=9767affc6f17f184864ce5d93e6878ed"
 },
 {
     "version": "1.14.3",
-    "forge": "https://maven.minecraftforge.net/net/minecraftforge/forge/1.14.3-27.0.60/forge-1.14.3-27.0.60-installer.jar"
+    "forge": "https://maven.minecraftforge.net/net/minecraftforge/forge/1.14.3-27.0.60/forge-1.14.3-27.0.60-installer.jar",
+    "optifine": "https://optifine.net/downloadx?f=OptiFine_1.14.3_HD_U_F2.jar&x=9767affc6f17f184864ce5d93e6878ed"
 },
 {
     "version": "1.14.4",
-    "forge": "https://maven.minecraftforge.net/net/minecraftforge/forge/1.14.4-28.2.23/forge-1.14.4-28.2.23-installer.jar"
+    "forge": "https://maven.minecraftforge.net/net/minecraftforge/forge/1.14.4-28.2.23/forge-1.14.4-28.2.23-installer.jar",
+    "optifine": "https://optifine.net/downloadx?f=OptiFine_1.14.4_HD_U_G5.jar&x=9767affc6f17f184864ce5d93e6878ed"
 },
 {
     "version": "1.13.2",
-    "forge": "https://maven.minecraftforge.net/net/minecraftforge/forge/1.17.1-37.0.58/forge-1.17.1-37.0.58-installer.jar"
+    "forge": "https://maven.minecraftforge.net/net/minecraftforge/forge/1.17.1-37.0.58/forge-1.17.1-37.0.58-installer.jar",
+    "optifine": "https://optifine.net/downloadx?f=OptiFine_1.13.2_HD_U_G5.jar&x=9767affc6f17f184864ce5d93e6878ed"
 },
 {
     "version": "1.12",
-    "forge": "https://maven.minecraftforge.net/net/minecraftforge/forge/1.12-14.21.1.2443/forge-1.12-14.21.1.2443-installer.jar"
+    "forge": "https://maven.minecraftforge.net/net/minecraftforge/forge/1.12-14.21.1.2443/forge-1.12-14.21.1.2443-installer.jar",
+    "optifine": "https://optifine.net/downloadx?f=OptiFine_1.12_HD_U_G5.jar&x=b983be6bda1dd319f895aad9403d6a60"
 },
 {
     "version": "1.12.1",
-    "forge": "https://maven.minecraftforge.net/net/minecraftforge/forge/1.12.1-14.22.1.2485/forge-1.12.1-14.22.1.2485-installer.jar"
+    "forge": "https://maven.minecraftforge.net/net/minecraftforge/forge/1.12.1-14.22.1.2485/forge-1.12.1-14.22.1.2485-installer.jar",
+    "optifine": "https://optifine.net/downloadx?f=OptiFine_1.12.1_HD_U_G5.jar&x=b983be6bda1dd319f895aad9403d6a60"
 },
 {
     "version": "1.12.2",
-    "forge": "https://maven.minecraftforge.net/net/minecraftforge/forge/1.12.2-14.23.5.2855/forge-1.12.2-14.23.5.2855-installer.jar"
+    "forge": "https://maven.minecraftforge.net/net/minecraftforge/forge/1.12.2-14.23.5.2855/forge-1.12.2-14.23.5.2855-installer.jar",
+    "optifine": "https://optifine.net/downloadx?f=OptiFine_1.12.2_HD_U_G5.jar&x=b983be6bda1dd319f895aad9403d6a60"
 },
 {
     "version": "1.11",
-    "forge": "https://maven.minecraftforge.net/net/minecraftforge/forge/1.11-13.19.1.2199/forge-1.11-13.19.1.2199-installer.jar"
+    "forge": "https://maven.minecraftforge.net/net/minecraftforge/forge/1.11-13.19.1.2199/forge-1.11-13.19.1.2199-installer.jar",
+    "optifine": "https://optifine.net/downloadx?f=OptiFine_1.11_HD_U_G5.jar&x=b983be6bda1dd319f895aad9403d6a60"
 },
 {
     "version": "1.11.2",
-    "forge": "https://maven.minecraftforge.net/net/minecraftforge/forge/1.11.2-13.20.1.2588/forge-1.11.2-13.20.1.2588-installer.jar"
+    "forge": "https://maven.minecraftforge.net/net/minecraftforge/forge/1.11.2-13.20.1.2588/forge-1.11.2-13.20.1.2588-installer.jar",
+    "optifine": "https://optifine.net/downloadx?f=OptiFine_1.11.2_HD_U_G5.jar&x=b983be6bda1dd319f895aad9403d6a60"
 }
 ]
