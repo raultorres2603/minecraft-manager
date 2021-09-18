@@ -9,7 +9,7 @@ To install the aplication, you will download the **dist** folder, and then, exec
 # Functionalities
 - [x] Installing MODS automatically.
 - [x] Installing texture packs automatically.
-- [ ] Optimize Minecraft
+- [x] Optimize Minecraft (Optifine)
 - [ ] Backup your worlds.
 - [ ] Create a configurable server
 
