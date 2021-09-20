@@ -272,7 +272,7 @@ ipcMain.on('comprobarVersionOptifine', (event, args) => {
                   alert("Error: Can't download Optifine, check your internet connection.")
                 })
 
-                if (res.statusCode >= 200 && res.statusCode < 400) {
+                if (res.statusCode >= 200 && res.statusCode < 300) {
                   let fichero = fs.createWriteStream(path.join(os.homedir(), "Downloads", `optifine-${currentVersion}.jar`));
                   res.pipe(fichero)
                 } else {
