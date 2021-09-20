@@ -6,6 +6,7 @@ const os = require('os');
 const url = require('url');
 const https = require('https');
 const { exec, spawn, execFile } = require('child_process');
+var wget = require('node-wget');
 
 var mainWindow;
 var versiones = require("./public/versiones/versiones.json");
@@ -267,20 +268,11 @@ ipcMain.on('comprobarVersionOptifine', (event, args) => {
 
             } else {
               event.sender.send('instalandoOptifine');
-              https.get(elemento.optifine, { encoding: null }, (res) => {
-                res.on('error', () => {
-                  alert("Error: Can't download Optifine, check your internet connection.")
-                })
 
-                if (res.statusCode >= 200 && res.statusCode < 300) {
-                  let fichero = fs.createWriteStream(path.join(os.homedir(), "Downloads", `optifine-${currentVersion}.jar`));
-                  res.pipe(fichero)
+              wget({url: elemento.optifine, dest:`${path.join(os.homedir(), "Downloads", `optifine-${currentVersion}.jar`)}`}, (error, response, body) => {
+                if (err) {
+                  console.log(err);
                 } else {
-                  console.log(res.statusCode)
-                }
-
-                res.on(`end`, () => {
-
                   let optifine = exec(`java -jar ${path.join(os.homedir(), "Downloads", `optifine-${currentVersion}.jar`)}`, (err, stdout, stderr) => {
                     if (err) {
                       console.log(err)
@@ -300,7 +292,7 @@ ipcMain.on('comprobarVersionOptifine', (event, args) => {
                       }
                     }
                   })
-                })
+                }
               })
             }
           })
