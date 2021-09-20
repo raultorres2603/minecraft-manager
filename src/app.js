@@ -260,11 +260,7 @@ ipcMain.on('comprobarVersionOptifine', (event, args) => {
     } else {
       versiones.forEach(elemento => {
         if (elemento.version == version) {
-          let optifine = elemento.optifine;
-          let optifineDirectory = optifine.indexOf(`_`);
-          let ultimaPos = optifine.indexOf('_', optifineDirectory + 1);
-          let versionString = optifine.substring(optifineDirectory, ultimaPos)
-          let currentVersion = versionString
+          currentVersion = version;
 
           fs.readdir(path.join(os.homedir(), "AppData", "Roaming", ".minecraft", "versions"), (err, files) => {
             if (err) {
